@@ -16,6 +16,7 @@ class Triplet
   def pythagorean?
     (@num1**2 + @num2**2) == (@num3**2) 
   end
+  
   class << self
     def where(args = {})
       min_factor = args.fetch(:min_factor, 1)
