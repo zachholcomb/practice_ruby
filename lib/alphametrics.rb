@@ -7,8 +7,8 @@ class Alphametics
 
       (0..9).to_a.permutation(letters.count).each do |digits|
         key = Hash[*letters.zip(digits).flatten]
+        next if !check_ones?(key, words)
         substitute = puzzle.gsub(/[A-Z]/, key)
-        next if check_ones?(substitute, words)
         next if leading_zeros?(substitute)
         return key if eval(substitute)
        end
@@ -21,7 +21,7 @@ class Alphametics
 
     def check_ones?(set, words)
       if words[0..-2].any? { |word| word.length < words.last.length }
-        set.scan(/\b\w+\b/).last[0] == 1
+        set[words.last[0]] == 1
       end
     end
 
