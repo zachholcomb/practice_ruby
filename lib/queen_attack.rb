@@ -11,10 +11,10 @@ class Queens
     return true if same_row?
     return true if same_column?
     return true if diagonal?
-
+    
     false 
   end
-  
+
   private
 
   def same_row?
@@ -28,56 +28,8 @@ class Queens
   end
 
   def diagonal?
-    return true if check_positive_x_positive_y?
-    return true if check_negative_x_negative_y?
-    return true if check_negative_x_positive_y?
-    return true if check_positive_x_negative_y?
-  
-    false
-  end
-
-  def check_positive_x_positive_y?
-    diagonal = positions[:white]
-    until !valid_position?(diagonal)
-      diagonal = diagonal.map { |p| p + 1 }
-      return true if positions[:black] == diagonal
-    end
-  end
-
-  def check_negative_x_negative_y?
-    diagonal = positions[:white]
-    until !valid_position?(diagonal)
-      diagonal = diagonal.map { |p| p - 1 }
-      return true if positions[:black] == diagonal
-    end
-  end
-
-  def check_negative_x_positive_y?
-    diagonal = positions[:white]
-    until !valid_position?(diagonal)
-      diagonal = diagonal.map.with_index do |p, index|
-        if index == 0
-          p - 1
-        else
-          p + 1
-        end
-      end
-      return true if positions[:black] == diagonal
-    end
-  end
-
-  def check_positive_x_negative_y?
-    diagonal = positions[:white]
-    until !valid_position?(diagonal)
-      diagonal = diagonal.map.with_index do |p, index|
-       if index == 0
-        p + 1
-       else
-        p - 1
-       end
-      end
-      return true if positions[:black] == diagonal
-    end
+    line_x, line_y = positions[:white].zip(positions[:black]).map { |w, b| w - b }
+    line_x.abs == line_y.abs
   end
 
   def check_invalid_positions(positions)
